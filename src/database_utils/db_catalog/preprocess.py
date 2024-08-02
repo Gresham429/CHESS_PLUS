@@ -12,6 +12,19 @@ load_dotenv(override=True)
 
 EMBEDDING_FUNCTION = OpenAIEmbeddings(model="text-embedding-3-large")
 
+# TEXT2VEC EMBEDDING FUNCTION
+import warnings
+warnings.filterwarnings("ignore")
+
+from sentence_transformers import SentenceTransformer
+model = SentenceTransformer("shibing624/text2vec-base-chinese")
+
+from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
+class Text2VecEmbeddingFunction(EmbeddingFunction):
+    def __call__(self, texts: Documents) -> Embeddings:
+        embeddings = [model.encode(x) for x in texts]
+        return embeddings
+
 def make_db_context_vec_db(db_directory_path: str, **kwargs) -> None:
     """
     Creates a context vector database for the specified database directory.
@@ -47,6 +60,6 @@ def make_db_context_vec_db(db_directory_path: str, **kwargs) -> None:
 
     vector_db_path.mkdir(exist_ok=True)
 
-    Chroma.from_documents(docs, EMBEDDING_FUNCTION, persist_directory=str(vector_db_path))
+    Chroma.from_documents(docs, Text2VecEmbeddingFunction, persist_directory=str(vector_db_path))
 
     logging.info(f"Context vector database created at {vector_db_path}")
