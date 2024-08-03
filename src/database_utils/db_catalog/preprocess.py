@@ -17,7 +17,8 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from sentence_transformers import SentenceTransformer
-model = SentenceTransformer("shibing624/text2vec-base-chinese")
+# model = SentenceTransformer("shibing624/text2vec-base-chinese")
+model = SentenceTransformer("aspire/acge_text_embedding")
 
 from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
 class Text2VecEmbeddingFunction(EmbeddingFunction):
