@@ -37,12 +37,13 @@ engine7='meta-llama/Meta-Llama-3-70B-Instruct'
 engine8='finetuned_colsel'
 engine9='finetuned_col_filter'
 engine10='gpt-3.5-turbo-instruct'
+engine11='tiiuae/falcon-40b-instruct'
 
 pipeline_setup='{
     "keyword_extraction": {
-        "engine": "'${engine2}'",
+        "engine": "'${engine11}'",
         "temperature": 0.2,
-        "base_uri": ""
+        "base_uri": "http://127.0.0.1:8001"
     },
     "entity_retrieval": {
         "mode": "'${entity_retieval_mode}'"
@@ -52,34 +53,34 @@ pipeline_setup='{
         "top_k": '${top_k}'
     },
     "column_filtering": {
-        "engine": "'${engine2}'",
+        "engine": "'${engine11}'",
         "temperature": 0.0,
-        "base_uri": ""
+        "base_uri": "http://127.0.0.1:8001"
     },
     "table_selection": {
         "mode": "'${table_selection_mode}'",
-        "engine": "'${engine3}'",
+        "engine": "'${engine11}'",
         "temperature": 0.0,
-        "base_uri": "",
+        "base_uri": "http://127.0.0.1:8001",
         "sampling_count": 1
     },
     "column_selection": {
         "mode": "'${column_selection_mode}'",
-        "engine": "'${engine3}'",
+        "engine": "'${engine11}'",
         "temperature": 0.0,
-        "base_uri": "",
+        "base_uri": "http://127.0.0.1:8001",
         "sampling_count": 1
     },
     "candidate_generation": {
-        "engine": "'${engine3}'",
+        "engine": "'${engine6}'",
         "temperature": 0.0,
-        "base_uri": "",
+        "base_uri": "http://127.0.0.1:8002",
         "sampling_count": 1
     },
     "revision": {
-        "engine": "'${engine3}'",
+        "engine": "'${engine6}'",
         "temperature": 0.0,
-        "base_uri": "",
+        "base_uri": "http://127.0.0.1:8002",
         "sampling_count": 1
     }
 }'
